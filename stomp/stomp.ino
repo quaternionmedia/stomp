@@ -31,7 +31,7 @@ void loop(){
   //Loop through and read all 16 values
   for(int i = 0; i < 16; i++) {
     int mux = readMux(i);
-    if (STATE[i] != mux) {
+    if ((STATE[i] > 0 && mux == 0) || (STATE[i] == 0 && mux > 0)) {
       midiEventPacket_t packet = { 0x09, 0x90, 0x3C + i, (uint8_t) mux };
       MidiUSB.sendMIDI(packet);
       MidiUSB.flush();
